@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -21,7 +22,7 @@ import coffeemail.util.Util;
 
 public class ModuleManager {
 
-	private ArrayList<ExtendedModul> modules = new ArrayList<ExtendedModul>();
+	private ArrayList<ExtendedModule> modules = new ArrayList<ExtendedModule>();
 	private EventHandler handler = new EventHandler();
 
 	public void loadModuls() {
@@ -72,6 +73,7 @@ public class ModuleManager {
 			int classcount = 0;
 			byte[] arraykey = new byte[0];
 			String signkey = "";
+			HashMap<String, String> lang = new HashMap<String, String>();
 
 			while (e.hasMoreElements()) {
 				JarEntry je = (JarEntry) e.nextElement();
@@ -91,7 +93,7 @@ public class ModuleManager {
 							je.getName().length() - 6);
 					className = className.replace('/', '.');
 					Class<?> c = cl.loadClass(className);
-					
+
 					try {
 						if (c.isAnnotationPresent(ModuleMain.class)) {
 
@@ -110,6 +112,23 @@ public class ModuleManager {
 					}
 					scan.close();
 					inputStream.close();
+				} else if (je.getName().endsWith(".lang")) {
+					InputStream inputStream = jarFile.getInputStream(je);
+					Scanner scan = new Scanner(inputStream);
+					int index = 0;
+					if (je.getName().contains("/")) {
+						index = je.getName().lastIndexOf('/') + 1;
+					}
+					String langname = je.getName().substring(index,
+							je.getName().length() - 5);
+					while (scan.hasNext()) {
+						String[] langstrings = scan.nextLine().split(
+								"(?<!\\\\)=");
+						lang.put(langname + "." + langstrings[0],
+								langstrings[1]);
+					}
+					scan.close();
+					inputStream.close();
 				}
 			}
 			jarFile.close();
@@ -118,16 +137,19 @@ public class ModuleManager {
 				Module module = (Module) mainclass.newInstance();
 				arraykey = Util.merchByteArrays(arraykey, new String(classcount
 						+ "").getBytes());
-				ExtendedModul mm = new ExtendedModul(module, arraykey, signkey);
-				modules.add(mm);
+				ExtendedModule em = new ExtendedModule(module, arraykey,
+						signkey);
+				em.setLang(lang);
+				module.setExtendedModul(em);
+				modules.add(em);
 				if (firstinstall) {
-					File folder = new File(file.getParent(), mm.getName());
+					File folder = new File(file.getParent(), em.getName());
 					if (!folder.exists()) {
 						folder.mkdir();
 					}
 
-					file.renameTo(new File(file.getParent(), mm.getName() + "/"
-							+ mm.getName() + ".cmm"));
+					file.renameTo(new File(file.getParent(), em.getName() + "/"
+							+ em.getName() + ".cmm"));
 				}
 				loaded = true;
 			}
@@ -135,7 +157,7 @@ public class ModuleManager {
 				CoffeeMail.log("No Main-Class found! [" + file.getName() + "]");
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			CoffeeMail.error(e);
 		}
 	}
 
@@ -144,7 +166,7 @@ public class ModuleManager {
 		// ArrayList<ExtendedModul> eml = new ArrayList<ExtendedModul>();
 		// eml.addAll(modules);
 
-		for (ExtendedModul em : modules) {
+		for (ExtendedModule em : modules) {
 			boolean canboot = false;
 			if (em.getDependency().trim().equalsIgnoreCase("null")) {
 				canboot = true;
@@ -152,7 +174,7 @@ public class ModuleManager {
 					|| em.getDependency().trim().equalsIgnoreCase("init")) {
 				canboot = true;
 			} else {
-				for (ExtendedModul emm : modules) {
+				for (ExtendedModule emm : modules) {
 					if (em.getDependency().trim()
 							.equalsIgnoreCase(emm.getName())) {
 						canboot = true;
@@ -176,7 +198,7 @@ public class ModuleManager {
 		new ModulesLoadedEvent().call();
 	}
 
-	public ArrayList<ExtendedModul> getModuls() {
+	public ArrayList<ExtendedModule> getModuls() {
 		return modules;
 	}
 
@@ -185,8 +207,8 @@ public class ModuleManager {
 	}
 
 	public void stopAll() {
-		for (ExtendedModul extendedModul : modules) {
-			extendedModul.stop();
+		for (ExtendedModule extendedModule : modules) {
+			extendedModule.stop();
 		}
 	}
 }

@@ -3,7 +3,7 @@ package coffeemail.console.defaults;
 import coffeemail.CoffeeMail;
 import coffeemail.MailServer;
 import coffeemail.console.Command;
-import coffeemail.module.ExtendedModul;
+import coffeemail.module.ExtendedModule;
 
 public class CommandModule extends Command {
 
@@ -24,7 +24,7 @@ public class CommandModule extends Command {
 				int count = MailServer.getModuleManager().getModuls().size();
 				log("=== Loaded Modules [" + count + "] ===");
 				log("There are " + count + " loaded Modules");
-				for (ExtendedModul m : MailServer.getModuleManager()
+				for (ExtendedModule m : MailServer.getModuleManager()
 						.getModuls()) {
 					if (m.isVerified()) {
 						log(m.getName() + "[" + m.getVersion() + "] by "
@@ -48,8 +48,8 @@ public class CommandModule extends Command {
 				log("module " + args[0] + " <name/id>");
 			} else if (args[0].equalsIgnoreCase("delete")
 					|| args[0].equalsIgnoreCase("remove")) {
-				ExtendedModul module = null;
-				for (ExtendedModul em : MailServer.getModuleManager()
+				ExtendedModule module = null;
+				for (ExtendedModule em : MailServer.getModuleManager()
 						.getModuls()) {
 					if (em.getName().equalsIgnoreCase(args[1])) {
 						module = em;

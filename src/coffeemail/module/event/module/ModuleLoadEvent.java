@@ -1,18 +1,18 @@
 package coffeemail.module.event.module;
 
 import coffeemail.MailServer;
-import coffeemail.module.ExtendedModul;
+import coffeemail.module.ExtendedModule;
 import coffeemail.module.event.CancelableEvent;
 
 public class ModuleLoadEvent extends CancelableEvent {
 
-	private ExtendedModul modul;
+	private ExtendedModule modul;
 
-	public ModuleLoadEvent(ExtendedModul modul) {
+	public ModuleLoadEvent(ExtendedModule modul) {
 		this.modul = modul;
 	}
 
-	public ExtendedModul getModul() {
+	public ExtendedModule getModul() {
 		return modul;
 	}
 

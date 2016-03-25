@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -28,9 +29,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class ExtendedModul {
+public class ExtendedModule {
 
 	private Module module;
+	private HashMap<String, String> lang;
 	private String name;
 	private String author;
 	private String version;
@@ -39,7 +41,7 @@ public class ExtendedModul {
 	protected byte[] sign;
 	private boolean start = false;
 
-	public ExtendedModul(Module module, byte[] verifyed, String sign) {
+	public ExtendedModule(Module module, byte[] verifyed, String sign) {
 		this.verifyed = verifyed;
 		this.sign = DatatypeConverter.parseBase64Binary(sign);
 		this.module = module;
@@ -231,6 +233,14 @@ public class ExtendedModul {
 
 	public void stop() {
 		module.unload();
+	}
+
+	public HashMap<String, String> getLang() {
+		return lang;
+	}
+
+	public void setLang(HashMap<String, String> lang) {
+		this.lang = lang;
 	}
 
 	public boolean isVerified() {

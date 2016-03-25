@@ -34,11 +34,11 @@ public final class MailServer {
 			}
 		}
 		CoffeeMail.log("Loading Translations");
-		translator = new Translator();
 		fm = new DefaultFileManager();
 		mm = new ModuleManager();
 		c = new Console();
 		cm = new ConfigManager();
+		translator = new Translator();
 		CoffeeMail.log("Start MailSendManager-Service");
 		msm = new MailSendManager();
 

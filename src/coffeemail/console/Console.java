@@ -6,6 +6,7 @@ import java.util.Scanner;
 import coffeemail.CoffeeMail;
 import coffeemail.console.defaults.CommandDebug;
 import coffeemail.console.defaults.CommandDelete;
+import coffeemail.console.defaults.CommandEmail;
 import coffeemail.console.defaults.CommandExit;
 import coffeemail.console.defaults.CommandModule;
 import coffeemail.console.defaults.CommandStop;
@@ -53,6 +54,7 @@ public class Console extends Thread {
 		addCommand(new CommandExit());
 		addCommand(new CommandModule());
 		addCommand(new CommandDelete());
+		addCommand(new CommandEmail());
 		// addCommand(new CommandRestart());
 	}
 

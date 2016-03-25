@@ -11,11 +11,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import coffeemail.config.ConfigManager;
-import coffeemail.module.ExtendedModul;
+import coffeemail.module.ExtendedModule;
 
 public final class CoffeeMail {
-
-	// TODO Multilang Support
 
 	private final static String currentversion = "0.1.3";
 	public final static String name = "CoffeeMail";
@@ -47,10 +45,6 @@ public final class CoffeeMail {
 				log("Turn on DeepDebugging!");
 				debug = true;
 				deepdebug = true;
-				// TODO REMOVE ME!
-				// debug = true;
-				// new Thread(new WebHandler()).start();
-				// setup();
 			}
 		}
 		if (isInstalled()) {
@@ -108,9 +102,9 @@ public final class CoffeeMail {
 			}
 			new ConfigManager();
 
-			System.out.println("##########################################");
+			log("##########################################");
 			log(name + " was successfully installed!");
-			System.out.println("##########################################");
+			log("##########################################");
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
@@ -174,7 +168,7 @@ public final class CoffeeMail {
 		return count;
 	}
 
-	public static int deleteModule(ExtendedModul em) {
+	public static int deleteModule(ExtendedModule em) {
 
 		File module = new File(defaultfolder, "module");
 		File folder = new File(module, em.getName());
@@ -378,7 +372,7 @@ public final class CoffeeMail {
 	public static void shutdown(boolean forced) {
 		log("Stopping " + name + "Server");
 		MailServer.getModuleManager().getEventHandler().getListeners().clear();
-		for (ExtendedModul m : MailServer.getModuleManager().getModuls()) {
+		for (ExtendedModule m : MailServer.getModuleManager().getModuls()) {
 			m.unload();
 		}
 		if (MailServer.getMailReceiveManager() != null) {

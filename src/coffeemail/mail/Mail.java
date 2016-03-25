@@ -32,6 +32,17 @@ public class Mail {
 		this.lines = lines;
 	}
 
+	public Mail(Address sender, Address receiver, String subject,
+			String... lines) {
+		this.sender = sender;
+		this.receiver = receiver;
+		this.subject = subject;
+		this.lines = new ArrayList<String>();
+		for (String line : lines) {
+			addLine(line);
+		}
+	}
+
 	public void addAttribute(MailAttribute mailAttribute) {
 		attribute.add(mailAttribute);
 	}

@@ -15,7 +15,6 @@ public class Translator {
 		lang = new HashMap<String, String>();
 		load("de_DE");
 		load("en_US");
-		System.out.println(translate("install.success", "CoffeeMail"));
 	}
 
 	public void load(String lang) {

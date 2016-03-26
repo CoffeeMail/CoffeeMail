@@ -12,7 +12,7 @@ import coffeemail.CoffeeMail;
 import coffeemail.dns.Lookup;
 import coffeemail.dns.MXRecord;
 import coffeemail.exeptions.MailSendException;
-import coffeemail.exeptions.MissingMXRecordException;
+import coffeemail.imap.MissingMXRecordException;
 import coffeemail.mail.Address;
 import coffeemail.mail.Mail;
 import coffeemail.mail.MailAttribute;

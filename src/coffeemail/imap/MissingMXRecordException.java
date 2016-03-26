@@ -1,4 +1,4 @@
-package coffeemail.exeptions;
+package coffeemail.imap;
 
 import java.io.IOException;
 

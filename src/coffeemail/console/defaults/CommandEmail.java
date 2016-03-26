@@ -1,5 +1,6 @@
 package coffeemail.console.defaults;
 
+import coffeemail.CoffeeMail;
 import coffeemail.config.Config;
 import coffeemail.console.Command;
 import coffeemail.exeptions.NoValidEmailAddressException;
@@ -33,6 +34,7 @@ public class CommandEmail extends Command {
 					log("No defaultdoamin set!");
 				}
 			} catch (NoValidEmailAddressException e) {
+				CoffeeMail.error(e);
 				log("Email not found " + args[0]);
 			}
 		} else {

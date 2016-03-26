@@ -1,1 +1,1 @@
-install.success=%s wurde erfolgreich installiert!
+exception.email.notvalid=Die Email-Addresse "%s" ist ungültig!

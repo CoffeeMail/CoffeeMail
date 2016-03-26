@@ -388,4 +388,21 @@ public final class CoffeeMail {
 			System.exit(0);
 		}
 	}
+
+	public static String translate(String key) {
+		return MailServer.getTranslator().translate(key);
+	}
+
+	public static String translate(String key, String... args) {
+		return MailServer.getTranslator().translate(key, args);
+	}
+
+	public static String translateToLang(String key, String lang) {
+		return MailServer.getTranslator().translateToLang(key, lang);
+	}
+
+	public static String translateToLang(String key, String lang,
+			String... args) {
+		return MailServer.getTranslator().translateToLang(key, lang, args);
+	}
 }

@@ -1,98 +1,82 @@
-# CoffeeMail
-Mailserver written in Java
+#CoffeeMail
 
-Depends on [GSON](https://github.com/google/gson) by Google
+Coffeemail is a Java-Based Mailserver which can be expanded with **Plugins** like a Webserver or Autoresponder. It's easy to understand, open-source and free!
 
+----------
 
-###Plugin Example
+Dependencies
+-------------
+[GSON](https://github.com/google/gson) by Google
+[Java](https://www.java.com/en/) by Oracle
 
+----------
+Plugins
+-------------
+
+You can create Plugins for CoffeeMail
 Here is a example for a plugin
 
-```
-package your.project;
+**Import CoffeeMail**
+> 
+>import coffeemail.mail.Mail;
+import coffeemail.module.*;
 
-import coffeemail.mail.Mail;
-import coffeemail.module.Module;
-import coffeemail.module.annotation.ModuleAuthor;
-import coffeemail.module.annotation.ModuleMain;
-import coffeemail.module.annotation.ModuleName;
-import coffeemail.module.annotation.ModuleVersion;
-import coffeemail.module.event.Listener;
-import coffeemail.module.event.mail.MailReceiveEvent;
-import coffeemail.module.event.mail.MailSendEvent;
-import coffeemail.module.event.mail.PreMailReceiveEvent;
-import coffeemail.module.event.mail.PreMailSendEvent;
-import coffeemail.module.event.module.ModuleLoadEvent;
-import coffeemail.module.event.module.ModulesLoadedEvent;
+**Define Module-Data**
+>@ModuleMain
+@ModuleName(modulename = "AutoResponder")	
+@ModuleVersion(moduleversion = "1.0")
+@ModuleAuthor(moduleauthor = "podpage")
 
-import java.util.Arrays;
+**Extend Module**	
+>public class Main extends Module {
 
-@ModuleMain									//SET MODULE-MAIN
-@ModuleName(modulename = "AutoResponder")	//SET MODULE-NAME
-@ModuleVersion(moduleversion = "1.0")		//SET MODULE-VERSION
-@ModuleAuthor(moduleauthor = "podpage")		//SET MODULE-AUTHOR
-public class Main extends Module {			//EXTEND WITH MODULE
+**Create Config by adding *public static* Variables in Mainclass**
+>public static String response = "Received your email!";
 
-	public static String response = "Received your email!"; //CREATE CONFIG
-	
-	public void load() {
-		addListener(new Listener() {
+**load-Method needs to exist**
+>public void load() {
 
-			public void sendMailEvent(MailSendEvent e) {
+**Register a listener for events**
 
-			}
-
-			public void receiveMailEvent(MailReceiveEvent e) {
-				Mail mail = new Mail(
-						e.getMail().getReceiver().setName("Auto-Reply"),
-						e.getMail().getSender(),
-						"Email received!", response);
-				mail.send();
-			}
-
-			@Override
-			public void presendMailEvent(PreMailSendEvent e) {
-
-			}
-
-			@Override
-			public void prereceiveMailEvent(PreMailReceiveEvent e) {
-
-			}
-
-			@Override
-			public void loadModulEvent(ModuleLoadEvent e) {
-
-			}
-
-			@Override
-			public void loadedModulesEvent(ModulesLoadedEvent e) {
-
-			}
-		});
+>addListener(new Listener() {
+	public void sendMailEvent(MailSendEvent e) {}
+	public void receiveMailEvent(MailReceiveEvent e) {
+		Mail mail = new Mail(e.getMail().getReceiver().setName("Auto-Reply"), 
+		e.getMail().getSender(),
+		"Email received!",
+		response);
+		mail.send();
 	}
+	public void presendMailEvent(PreMailSendEvent e) {}
+	public void prereceiveMailEvent(PreMailReceiveEvent e) {}
+	public void loadModulEvent(ModuleLoadEvent e) {}
+	public void loadedModulesEvent(ModulesLoadedEvent e) {}
+		});
+
+**Close **
+	>}
 }
-```
 
-Export it as .jar and rename it to .cmm
+**Export it as .jar and rename it to .cmm**
+**Drop it in the module-Folder**
 
+**Want a verifyed Plugin? - Text me [@podpage](https://twitter.com/podpage)**
 
-###License
+License
+-------------
 
 CoffeeMail is released under the [Apache 2.0 license](LICENSE).
 
-```
-Copyright 2016 Lino Brenner (podpage).
+>Copyright 2016 Lino Brenner (podpage).
 
-Licensed under the Apache License, Version 2.0 (the "License");
+>Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+>    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
+>Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-```

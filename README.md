@@ -31,8 +31,10 @@ import java.util.Arrays;
 @ModuleName(modulename = "AutoResponder")	//SET MODULE-NAME
 @ModuleVersion(moduleversion = "1.0")		//SET MODULE-VERSION
 @ModuleAuthor(moduleauthor = "podpage")		//SET MODULE-AUTHOR
-public class Main extends Module {			//Extend with Module
+public class Main extends Module {			//EXTEND WITH MODULE
 
+	public static String response = "Received your email!"; //CREATE CONFIG
+	
 	public void load() {
 		addListener(new Listener() {
 
@@ -44,7 +46,7 @@ public class Main extends Module {			//Extend with Module
 				Mail mail = new Mail(
 						e.getMail().getReceiver().setName("Auto-Reply"),
 						e.getMail().getSender(),
-						"Email erhalten!", "Received your email!");
+						"Email erhalten!", response);
 				mail.send();
 			}
 

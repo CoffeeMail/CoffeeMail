@@ -48,7 +48,8 @@ public void load() {
 
 **Register a listener for events**
 
-```addListener(new Listener() {
+```
+addListener(new Listener() {
 	public void sendMailEvent(MailSendEvent e) {}
 	public void receiveMailEvent(MailReceiveEvent e) {
 		Mail mail = new Mail(e.getMail().getReceiver().setName("Auto-Reply"), 
@@ -66,7 +67,8 @@ public void load() {
 
 **Close**
 
-```}
+```
+	}
 }
 ```
 

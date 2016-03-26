@@ -46,7 +46,7 @@ public class Main extends Module {			//EXTEND WITH MODULE
 				Mail mail = new Mail(
 						e.getMail().getReceiver().setName("Auto-Reply"),
 						e.getMail().getSender(),
-						"Email erhalten!", response);
+						"Email received!", response);
 				mail.send();
 			}
 

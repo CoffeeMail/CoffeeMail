@@ -54,7 +54,8 @@ import coffeemail.module.*;
 		});
 
 **Close **
-	>}
+
+>}
 }
 
 **Export it as .jar and rename it to .cmm**

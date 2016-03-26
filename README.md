@@ -27,15 +27,13 @@ import coffeemail.module.event.module.ModulesLoadedEvent;
 
 import java.util.Arrays;
 
-@ModuleMain
-@ModuleName(modulename = "AutoResponder")
-@ModuleVersion(moduleversion = "1.0")
-@ModuleAuthor(moduleauthor = "podpage")
-public class Main extends Module {
+@ModuleMain									//SET MODULE-MAIN
+@ModuleName(modulename = "AutoResponder")	//SET MODULE-NAME
+@ModuleVersion(moduleversion = "1.0")		//SET MODULE-VERSION
+@ModuleAuthor(moduleauthor = "podpage")		//SET MODULE-AUTHOR
+public class Main extends Module {			//Extend with Module
 
 	public void load() {
-		System.out.println(translate("test"));
-		System.out.println(translate("hello", "Username"));
 		addListener(new Listener() {
 
 			public void sendMailEvent(MailSendEvent e) {
@@ -46,8 +44,7 @@ public class Main extends Module {
 				Mail mail = new Mail(
 						e.getMail().getReceiver().setName("Auto-Reply"),
 						e.getMail().getSender(),
-						"Email erhalten!",
-						Arrays.asList(new String[] { "Vielen Dank für Ihr Email" }));
+						"Email erhalten!", "Received your email!");
 				mail.send();
 			}
 

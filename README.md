@@ -38,6 +38,7 @@ public class Main extends Module {
 
 **Create Config by adding *public static* Variables in Mainclass**
 ```
+@ModuleConfig
 public static String response = "Received your email!";
 ```
 

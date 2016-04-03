@@ -12,3 +12,7 @@
 hs_err_pid*
 *.classpath
 *.project
+
+# IntelliJ #
+.idea/
+CoffeeMail.iml
